@@ -1,0 +1,7 @@
+summarizer:
+  llm_client_key: "qwen3"
+  prompt_name: "summarizer"
+
+ner_extractor:
+  llm_client_key: "qwen3"
+  prompt_name: "ner_extractor"
