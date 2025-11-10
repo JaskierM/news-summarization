@@ -59,7 +59,7 @@ class JudgeIvanovDetails(BaseModel):
     )
 
 
-class SummaryOutput(BaseModel):
+class NewsSummarization(BaseModel):
     """
     Унифицированный ответ агента-суммаризатора.
     Поддерживает общий случай и два специальных сценария.

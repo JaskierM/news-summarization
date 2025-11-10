@@ -1,7 +1,7 @@
 import os
 import sys
 
-from typing import Optional, ClassVar
+from typing import ClassVar
 from functools import lru_cache
 from pathlib import Path
 from pydantic import Field
@@ -18,12 +18,12 @@ class AppSettings(BaseSettings):
     )
     ENV: Environment = Field(Environment.dev, validation_alias="APP_ENV")
 
-    PROJECT_NAME: str = "AI SberBPM"
+    PROJECT_NAME: str = "News Summarization"
     VERSION: str = "0.0.1"
 
     HOST: str = "0.0.0.0"
     PORT: int = 8080
-    BASE_PREFIX: str = "/api/ai-sberbpm"
+    BASE_PREFIX: str = ""
     DOCS: bool = True
 
     CORS_ORIGINS: list[str] = ["*"]
@@ -59,26 +59,6 @@ class AppSettings(BaseSettings):
     def CONFIGS_PATH(self) -> Path:
         bundle_root = Path(getattr(sys, "_MEIPASS", self.PROJECT_ROOT))
         return bundle_root / "app" / "configs"
-
-    def get_gigachat_secret_path(self, secret_file_name: str) -> Optional[Path]:
-        if self.PROD:
-            return None
-        return self.PROJECT_ROOT / "cert" / secret_file_name
-
-    @property
-    def KRB5_CONFIG_PATH(self) -> str:
-        if self.PROD:
-            return "/etc/krb5.conf"
-        else:
-            return str(self.PROJECT_ROOT / "deploy" / "krb5.conf")
-
-    @property
-    def KRB5_CACHE_PATH(self) -> str:
-        return "/tmp/krb5"
-
-    @property
-    def KEYTAB_TMP_PATH(self) -> str:
-        return "/tmp/keytab_file.keytab"
 
     @classmethod
     def load(cls) -> "AppSettings":

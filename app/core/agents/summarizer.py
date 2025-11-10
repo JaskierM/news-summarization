@@ -13,7 +13,7 @@ from langchain_core.output_parsers import PydanticOutputParser
 from app.core.settings.agents import SummarizerAgentSettings
 from app.core.agents.base import BaseAgent
 from app.core.agents.registry import AGENT_REGISTRY
-from app.core.states.agents.summarizer import SummaryOutput
+from app.core.states.agents.summarizer import NewsSummarization
 
 
 class SummarizerAgent(BaseAgent):
@@ -45,7 +45,7 @@ class SummarizerAgent(BaseAgent):
         return self._cfg
 
     def build(self) -> Runnable:
-        parser = PydanticOutputParser(pydantic_object=SummaryOutput)
+        parser = PydanticOutputParser(pydantic_object=NewsSummarization)
         prompt = self._llm_prompt.partial(
             format_instructions=parser.get_format_instructions()
         )
