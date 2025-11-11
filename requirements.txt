@@ -1,0 +1,10 @@
+fastapi
+openai
+langchain
+langchain-community
+langgraph
+jinja2
+pydantic
+pydantic-settings
+numpy
+uvicorn

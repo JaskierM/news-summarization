@@ -74,11 +74,11 @@ def test_full_summarizer():
     print(
         full_summarizer.get_state(config={"configurable": {"thread_id": SESSION_ID}})
         .values["summarization"]
-        .to_bullet_list()
+        .to_text()
     )
 
     print(
         full_summarizer.get_state(config={"configurable": {"thread_id": SESSION_ID}})
         .values["ner_extraction"]
-        .to_bullet_list()
+        .to_text()
     )

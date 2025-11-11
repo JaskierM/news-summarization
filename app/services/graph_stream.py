@@ -4,6 +4,7 @@ from app.core.graphs.registry import get_graph
 
 
 register_all()
+
 full_summarizer = get_graph("full_summarizer")
 
 

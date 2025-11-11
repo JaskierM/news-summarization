@@ -24,7 +24,7 @@ class NERPersonEntity(BaseModel):
         description=(
             "Список адресов или мест, связанных с этим человеком, если они упомянуты в тексте. "
             "Например: ['Москва', 'Здание Государственной Думы на Охотном Ряду']. "
-            "Если связи по месту нет — список пуст."
+            "Если связи по месту нет - список пуст."
         ),
     )
 
@@ -34,7 +34,7 @@ class NERExtraction(BaseModel):
 
     thinking: Optional[str] = Field(
         None,
-        description="Опциональные рабочие заметки/ход рассуждений модели. Можно не заполнять.",
+        description="Опциональные рабочие заметки/ход рассуждений для выполнения задачи.",
     )
 
     ner_persons: list[NERPersonEntity] = Field(
@@ -45,8 +45,13 @@ class NERExtraction(BaseModel):
         ),
     )
 
-    def to_bullet_list(self) -> str:
-        return "\n".join(
-            f"ФИО: {ner_person.full_name}; Роль: {ner_person.role}; Адреса: {ner_person.addresses}"
-            for ner_person in self.ner_persons
+    def to_text(self) -> str:
+        lines = [f"NER сущности:"]
+
+        lines.extend(
+            [
+                f"\tФИО: {ner_person.full_name}; Роль: {ner_person.role}; Адреса: {ner_person.addresses}"
+                for ner_person in self.ner_persons
+            ]
         )
+        return "\n".join(lines)

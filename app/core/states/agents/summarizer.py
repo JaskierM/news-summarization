@@ -67,7 +67,7 @@ class NewsSummarization(BaseModel):
 
     thinking: Optional[str] = Field(
         None,
-        description="Опциональные рабочие заметки/ход рассуждений модели. Можно не заполнять.",
+        description="Опциональные рабочие заметки/ход рассуждений для выполнения задачи.",
     )
 
     topic: Topic = Field(
@@ -91,9 +91,9 @@ class NewsSummarization(BaseModel):
         None,
         description="Детали при упоминании судьи Иванова, если тема 'judge_ivanov'; иначе null.",
     )
-    
-    def to_bullet_list(self) -> str:
-        lines = [f"Тема: {self.topic.value}", f"Краткое содержание: {self.summary}"]
+
+    def to_text(self) -> str:
+        lines = [f"Тема: {self.topic.value}"]
 
         if self.topic == Topic.DUMA_BILL and self.bill:
             lines.append("\nДетали законопроекта:")
@@ -117,5 +117,7 @@ class NewsSummarization(BaseModel):
                 lines.append(f"\tИнстанция: {self.judge_ivanov.instance}")
             if self.judge_ivanov.action:
                 lines.append(f"\tДействие/решение: {self.judge_ivanov.action}")
+
+        lines.extend(["\nКраткое содержание:", f"{self.summary}"])
 
         return "\n".join(lines)

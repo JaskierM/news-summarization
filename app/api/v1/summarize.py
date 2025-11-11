@@ -12,7 +12,6 @@ async def summarize(
 ) -> NewsSummarizationResponse:
     try:
         result = await event_source(payload)
-        print(f"RESULT: {result}")
 
         response = NewsSummarizationResponse(
             summarization=result["summarization"],
